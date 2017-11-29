@@ -1,0 +1,31 @@
+{
+    "name": "jminayat/modules",
+    "description": "modular laravel applications",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Javier Minaya Trinidad",
+            "email": "javiermt05@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "spatie/laravel-permission": "^2.7",
+        "chumper/zipper": "1.0.x"
+    },
+    "autoload": {
+        "psr-4": {
+            "JMinayaT\\Modules\\": "src/"
+        }
+    },
+    "extra": {
+    "laravel": {
+        "providers": [
+            "JMinayaT\\Modules\\ModulesServiceProvider"
+        ],
+        "aliases": {
+            "Module": "JMinayaT\\Modules\\Facades\\Module"
+        }
+    }
+  },
+}

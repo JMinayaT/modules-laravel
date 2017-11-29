@@ -1,0 +1,11 @@
+{
+	"name": "DummyName",
+	"alias": "DummyAlias",
+	"description": "DummyDescription",
+	"authors": {
+		"name": "DummyAuthorName",
+		"email": "DummyEmailAuthor"
+	},
+	"type": "dummyType",
+	"version": "dummyVersion"
+}
