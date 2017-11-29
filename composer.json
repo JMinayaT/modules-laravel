@@ -19,13 +19,13 @@
         }
     },
     "extra": {
-    "laravel": {
-        "providers": [
-            "JMinayaT\\Modules\\ModulesServiceProvider"
-        ],
-        "aliases": {
-            "Module": "JMinayaT\\Modules\\Facades\\Module"
-        }
+        "laravel": {
+            "providers": [
+                "JMinayaT\\Modules\\ModulesServiceProvider"
+            ],
+            "aliases": {
+                "Module": "JMinayaT\\Modules\\Facades\\Module"
+              }
+         }
     }
-  },
 }
