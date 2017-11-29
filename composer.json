@@ -1,6 +1,12 @@
 {
     "name": "jminayat/modules-laravel",
     "description": "modular laravel applications",
+    "keywords": [
+        "jminayat",
+        "laravel",
+        "modules",
+        "modular"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -8,8 +14,8 @@
             "email": "javiermt05@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
+        "php" : ">=7.0",
         "spatie/laravel-permission": "^2.7",
         "chumper/zipper": "1.0.x"
     },
