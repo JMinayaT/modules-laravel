@@ -72,7 +72,7 @@ class ModulesServiceProvider extends ServiceProvider
     protected function createModulesDirectory()
     {
         if ( !(is_dir(base_path('modules/'))) ) {
-            \File::makeDirectory(base_path('modules/'.$name .'/'),0775, true, true);
+            \File::makeDirectory(base_path('modules/'),0775, true, true);
         }
     }
 
