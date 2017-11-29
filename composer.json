@@ -8,7 +8,6 @@
         "modular"
     ],
     "license": "MIT",
-    "minimum-stability": "stable",
     "authors": [
         {
             "name": "Javier Minaya Trinidad",
@@ -22,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "JMinayaT\\Modules\\": "src/"
+            "JMinayaT\\Modules\\": "src"
         }
     },
     "extra": {
@@ -34,5 +33,7 @@
                 "Module": "JMinayaT\\Modules\\Facades\\Module"
               }
          }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
