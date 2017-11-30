@@ -5,6 +5,7 @@ use Illuminate\Console\Command;
 use JMinayaT\Modules\Util\ModuleMigrator;
 use JMinayaT\Modules\Models\Module;
 use Illuminate\Support\Str;
+use JMinayaT\Modules\Commands\ManagerCommands;
 
 class ModuleRollback extends Command
 {
