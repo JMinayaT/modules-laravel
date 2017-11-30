@@ -54,20 +54,20 @@ class CreateModule extends Command
         $this->mnc->registerModuleDB($name_module,$dcp, $name);
 
         if ($this->option('controller')) {
-            $this->callSilent('module:controller', [
+            $this->callSilent('module:make-controller', [
               'name_module' => $name_module, 'name_controller' => $name_module.'Controller'
             ]);
         }
 
         if ($this->option('model') && $this->option('migration')) {
-            $this->callSilent('module:model', [
+            $this->callSilent('module:make-model', [
               'name_module' => $name_module, 'name_model' => $name_module, '--migration' => 'default',
             ]);
         }
 
         else {
             if ($this->option('model')) {
-                $this->callSilent('module:model', [
+                $this->callSilent('module:make-model', [
                   'name_module' => $name_module, 'name_model' => $name_module
                 ]);
             }

@@ -2,11 +2,10 @@
 `jminayat/modules-laravel` is a package for the administration of your laravel application in modules. compatible with Laravel version 5.5 .
 * [Installation](#installation)
 * [Usage](#usage)
-* [Avanced Usage](#avanced-usage)
-  * [Artisan Commands](#artisan-commands)
-  * [Facade methods](#facade-methods)
-  * [Module Methods](#module-methods)
-  * [Publish Module](#publish-module)
+* [Artisan Commands](#artisan-commands)
+* [Facade methods](#facade-methods)
+* [Module Methods](#module-methods)
+* [Publish Module](#publish-module)
 
 
 ## Installation
@@ -64,15 +63,49 @@ return [
 ```
 ## Usage
 
-## Avanced Usage
+**Creating A Module**
 
-### Artisan Commands
+To create a new module, simply run the following command:
+``` bash
+php artisan module:create <module-name>
+```
+- `<module-name>` - Replace with the name of the desired module.
+- `module description` - Write the description of the module created.
 
-### Facade Methods
+To automatically add controller, model and migration when creating a new module use: `-c -d -m`
+``` bash
+php artisan module:create <module-name> -c -d -m
+```
+- `-c` or `--controller` - Create controller.
+- `-d` or `--model` - Create model.
+- `-m` or `--migration` - Create migration.
 
-### Module Methods
+**Folder Structure**
+```
+modules/
+  ├── Blog/
+      ├── Controllers/
+      ├── Database/
+          ├── migrations/
+      ├── Models/
+      ├── Resources/
+          ├── Assets/
+          ├── lang/
+          ├── views/
+      ├── Route/
+          ├── web.php
+          ├── api.php
+      ├── module.json
 
-### Publish Module
+```
+
+## Artisan Commands
+
+## Facade Methods
+
+## Module Methods
+
+## Publish Module
 
 
 ## License

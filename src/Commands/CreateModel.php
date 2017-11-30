@@ -14,7 +14,7 @@ class CreateModel extends Command
      *
      * @var string
      */
-    protected $signature = 'module:model {name_module} {name_model} {--m|migration}';
+    protected $signature = 'module:make-model {name_module} {name_model} {--m|migration}';
 
     /**
      * The console command description.
@@ -59,7 +59,7 @@ class CreateModel extends Command
         if ($this->option('migration')) {
             $nameMigration = 'Create'.$name_model.'sTable';
             $nameTable = strtolower($name_model).'s';
-            $this->callSilent('module:migration', [
+            $this->callSilent('module:make-migration', [
               'name_module' => $name_module, 'name_migration' => $nameMigration, '--model' => $nameTable
             ]);
         }

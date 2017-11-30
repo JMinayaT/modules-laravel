@@ -15,7 +15,7 @@ class CreateController extends Command
      *
      * @var string
      */
-    protected $signature = 'module:controller {name_module} {name_controller}';
+    protected $signature = 'module:make-controller {name_module} {name_controller}';
 
     /**
      * The console command description.

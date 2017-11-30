@@ -15,6 +15,8 @@ use JMinayaT\Modules\Commands\ModuleDelete;
 use JMinayaT\Modules\Commands\ModuleUp;
 use JMinayaT\Modules\Commands\PublishModule;
 use JMinayaT\Modules\Commands\ModuleInstall;
+use JMinayaT\Modules\Commands\ModuleMigrate;
+use JMinayaT\Modules\Commands\ModuleRollback;
 
 class ModulesServiceProvider extends ServiceProvider
 {
@@ -30,21 +32,36 @@ class ModulesServiceProvider extends ServiceProvider
         $this->publishesMigrations();
         $this->publishesCommands();
         $module = new Module();
+
           if (Schema::hasTable($module->getTable()) ) {
               $modules = Module::all();
+
               foreach ($modules as $module) {
+
                   if($module->active){
                       $path = base_path('modules/' . $module->name . '/');
+
                       if (is_dir($path)) {
                           $this->webRoutes($module->name);
                           $this->apiRoutes($module->name);
-                          $this->loadViews($module->name);
-                          $this->loadTranslations($module->name);
-                          $this->loadMigrations($module->name);
+
+                          if (is_dir(base_path('modules/' . $module->name . '/Resources/Views/'))) {
+                              $this->loadViews($module->name);
+                          }
+
+                          if (is_dir(base_path('modules/' . $module->name . '/Resources/Lang/'))) {
+                              $this->loadTranslations($module->name);
+                          }
+
+                          if (is_dir(base_path('modules/' . $module->name . '/Database/migrations/'))) {
+                              $this->loadMigrations($module->name);
+                          }
                       }
+
                       if (is_dir(base_path('modules/' . $module->name . '/Resources/Assets/js/'))) {
                           $this->JsFileRoute(base_path('modules/' . $module->name . '/Resources/Assets/js/'),$module->name);
                       }
+
                       if (is_dir(base_path('modules/' . $module->name . '/Resources/Assets/css/'))) {
                           $this->CssFileRoute(base_path('modules/' . $module->name . '/Resources/Assets/css/'),$module->name);
                       }
@@ -119,7 +136,9 @@ class ModulesServiceProvider extends ServiceProvider
                 ModuleDelete::class,
                 ModuleUp::class,
                 PublishModule::class,
-                ModuleInstall::class
+                ModuleInstall::class,
+                ModuleMigrate::class,
+                ModuleRollback::class
             ]);
         }
     }
