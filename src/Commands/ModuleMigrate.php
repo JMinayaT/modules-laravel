@@ -25,7 +25,7 @@ class ModuleMigrate extends Command
 
     protected $migrator;
 
-    public function __construct(ManagerCommands $mnc, ModuleMigrate $migrator)
+    public function __construct(ManagerCommands $mnc, ModuleMigrator $migrator)
     {
         parent::__construct();
         $this->mnc = new $mnc;
