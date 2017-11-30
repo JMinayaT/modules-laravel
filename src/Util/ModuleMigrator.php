@@ -32,7 +32,7 @@ class ModuleMigrator
         ['pretend' =>  null,
           'step'   =>  null,
         ]);
-        return true;
+        return $this->migrator->getNotes()
     }
 
     public function rollback($module_name)

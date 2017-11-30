@@ -51,7 +51,11 @@ class ModuleMigrate extends Command
         }
         $modules = Module::all();
         foreach ($modules as $module) {
-            $this->migrator->migrate($module->name);
+          $mgt =  $this->migrator->migrate($module->name);
+          foreach ($mgt as $msj) {
+            $this->output->writeln($msj);
+          }
+
         }
         $this->info('Migrations successfully');
     }
