@@ -101,6 +101,109 @@ modules/
 
 ## Artisan Commands
 
+****Note that the command names use "test" as the name of the example module****
+
+**module:active**
+
+activate | disable module, use true or false.
+```
+php artisan module:active test true
+```
+
+**module:create**
+
+create a new module.
+```
+php artisan module:create test
+```
+options
+
+- `-c` or `--controller` - Create controller.
+- `-d` or `--model` - Create model.
+- `-m` or `--migration` - Create migration.
+
+
+**module:delete**
+
+delete module.
+```
+php artisan module:delete test
+```
+
+**module:install**
+
+Install module from zip file.
+```
+php artisan module:install var/this-path/test.zip
+```
+
+**module:list**
+
+show list of all modules.
+```
+php artisan module:list
+```
+
+
+**module:make-controller**
+
+Create a new module controller.
+```
+php artisan module:make-controller test TestController
+```
+
+**module:make-model**
+
+Create a new module model.
+```
+php artisan module:make-model test TestModel
+```
+
+options
+- `-m` or `--migration` - Create migration.
+
+**module:make-migration**
+
+Create a new module migration.
+```
+php artisan module:make-migration test create_tests_table
+```
+
+**module:publish**
+
+Publish module zip file.
+```
+php artisan module:publish test
+```
+
+**module:up**
+
+Up config file module json.
+```
+php artisan module:up test
+```
+
+**module:migrate**
+
+Migrate database for all modules.
+```
+php artisan module:migrate
+```
+For migrate a specific module to use:
+```
+php artisan module:migrate test
+```
+**module:rollback**
+
+Rollback the last module database migration.
+```
+php artisan module:rollback
+```
+For rollback a specific module to use:
+```
+php artisan module:rollback test
+```
+
 ## Facade Methods
 
 ## Module Methods

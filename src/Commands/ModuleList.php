@@ -19,7 +19,7 @@ class ModuleList extends Command
      *
      * @var string
      */
-    protected $description = 'Show module list';
+    protected $description = 'show list of all modules';
 
     /**
      * Execute the console command.
@@ -28,8 +28,8 @@ class ModuleList extends Command
      */
     public function handle()
     {
-        $headers = ['Name', 'Description', 'Type','Active'];
-        $modules = Module::all(['name', 'description', 'type','active'])->toArray();
+        $headers = ['Name','Alias', 'Description', 'Type','Active'];
+        $modules = Module::all(['name', 'alias', 'description', 'type','active'])->toArray();
         foreach ($modules as $pos => $module) {
             if($module['active'] == 1){
                 $modules[$pos]['active'] = 'true';

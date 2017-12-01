@@ -21,7 +21,7 @@ class ModuleRollback extends Command
      *
      * @var string
      */
-    protected $description = 'Rollback module';
+    protected $description = 'Rollback the last module database migration';
 
     protected $migrator;
 
@@ -45,15 +45,19 @@ class ModuleRollback extends Command
                 $this->error('Module "'.$name_module. '" does not exist!; run module:create NameModule');
                 return false;
             }
-            $this->migrator->rollback($name_module);
-            $this->info('Rollback successfully');
+            $mgt = $this->migrator->rollback($name_module);
+            foreach ($mgt as $msj) {
+                $this->output->writeln($msj);
+            }
             return false;
         }
         $modules = Module::all();
         foreach ($modules as $module) {
-            $this->migrator->rollback($module->name);
+            $mgt = $this->migrator->rollback($module->name);
+            foreach ($mgt as $msj) {
+                $this->output->writeln($msj);
+            }
         }
-        $this->info('Rollbacks successfully');
     }
 
 

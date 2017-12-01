@@ -42,7 +42,7 @@ class ModuleMigrator
         ['pretend' =>  null,
           'step'   =>  null,
         ]);
-        return true;
+        return $this->migrator->getNotes();
     }
 
     protected function getMigrationPaths($paths)
