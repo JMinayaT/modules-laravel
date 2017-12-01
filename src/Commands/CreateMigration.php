@@ -55,11 +55,11 @@ class CreateMigration extends Command
             $model = $this->option('model');
         }
         if($type == 'plain'){
-            $this->files->put($path_migration, $this->builMigration(Str::snake($name_migration), $type));
+            $this->files->put($path_migration, $this->builMigration($name_migration, $type));
         }
         else if($type == 'model'){
             $path_migrationM = $path . 'Database/migrations/'.$timestamp.'_create_'.$model.'_table.php';
-            $this->files->put($path_migrationM, $this->builMigrationModel(Str::snake($name_migration), $model ,$type));
+            $this->files->put($path_migrationM, $this->builMigrationModel($name_migration, $model ,$type));
         }
 
       $this->info('Migration Model created successfully');
