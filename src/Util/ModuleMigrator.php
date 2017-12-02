@@ -34,6 +34,15 @@ class ModuleMigrator
         ]);
         return $this->migrator->getNotes();
     }
+    
+    public function reset($module_name)
+    {
+        $this->prepareDatabase();
+        $this->migrator->reset(
+            $this->getMigrationPaths('modules/'.$module_name.'/Database/migrations/'), null
+        );
+        return $this->migrator->getNotes();
+    }
 
     public function rollback($module_name)
     {

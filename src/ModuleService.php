@@ -80,9 +80,19 @@ class ModuleService extends BaseModel
         return  $this->migrator->migrate($module);
     }
 
-    public function moduleRollback($module)
+    public function moduleMigrateReset()
     {
-        return  $this->migrator->rollback($module);
+        return  $this->migrator->reset($module);
+    }
+
+    public function moduleMigrateResetAll()
+    {
+        $modules = $this->all();
+        $msj = [];
+        foreach($modules as $module) {
+            $msj[] =  $this->migrator->reset($module->name);
+        }
+        return $msj;
     }
 
     public function moduleMigrateAll()
@@ -95,12 +105,12 @@ class ModuleService extends BaseModel
         return $msj;
     }
 
-    public function moduleRollbackAll()
+    public function moduleRollback()
     {
         $modules = $this->all();
-        $msj = [];
+        $msj = "";
         foreach($modules as $module) {
-            $msj[] =  $this->migrator->rollback($module->name);
+            $msj =  $this->migrator->rollback($module->name);
         }
         return $msj;
     }
