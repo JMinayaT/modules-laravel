@@ -77,13 +77,34 @@ class ModuleService extends BaseModel
 
     public function moduleMigrate($module)
     {
-      return  $this->migrator->migrate($module);
+        return  $this->migrator->migrate($module);
     }
 
     public function moduleRollback($module)
     {
-      return  $this->migrator->rollback($module);
+        return  $this->migrator->rollback($module);
     }
+
+    public function moduleMigrateAll()
+    {
+        $modules = $this->all();
+        $msj = [];
+        foreach($modules as $module) {
+            $msj[] =  $this->migrator->migrate($module->name);
+        }
+        return $msj;
+    }
+
+    public function moduleRollbackAll()
+    {
+        $modules = $this->all();
+        $msj = [];
+        foreach($modules as $module) {
+            $msj[] =  $this->migrator->rollback($module->name);
+        }
+        return $msj;
+    }
+
 
 
 }

@@ -107,7 +107,7 @@ modules/
 
 activate | disable module, use true or false.
 ```
-php artisan module:active test true
+php artisan module:active test true 
 ```
 
 **module:create**
@@ -127,14 +127,14 @@ options
 
 delete module.
 ```
-php artisan module:delete test
+php artisan module:delete test 
 ```
 
 **module:install**
 
 Install module from zip file.
 ```
-php artisan module:install var/this-path/test.zip
+php artisan module:install var/this-path/test.zip 
 ```
 
 **module:list**
@@ -206,7 +206,101 @@ php artisan module:rollback test
 
 ## Facade Methods
 
+Get all modules.
+```php
+Module::all();
+```
+
+Get a specific module.
+```php
+Module::get('test');
+```
+
+Get all active modules.
+```php
+Module::getEnabled();
+```
+
+Get all disabled modules.
+```php
+Module::getDisabled();
+```
+
+Check the specified module. If it exists, will return true, otherwise false.
+```php
+Module::has('test');
+```
+
+Count all modules.
+```php
+Module::count();
+```
+
+Install a module using the zip file.
+```php
+Module::install('path/file.zip');
+```
+
+Migrate database the specified module.
+```php
+Module::moduleMigrate('test');
+```
+
+Rollback database the specified module.
+```php
+Module::moduleRollback('test');
+```
+
+Migrate the database to all modules
+```php
+Module::moduleMigrateAll('test');
+```
+
+Rollback database to all modules.
+```php
+Module::moduleRollbackAll();
+```
+
 ## Module Methods
+
+get entity from a specific module.
+```php
+$module = Module::get('test');
+```
+Get module name in studlycase.
+```php
+$module->studlyName();
+```
+
+Get the status of the module if it is active or disabled.
+```php
+$module->status();
+```
+
+Enable the specified module.
+```php
+$module->active();
+```
+
+Enable the specified module.
+```php
+$module->disable();
+```
+
+Delete the specified module.
+```php
+$module->delete();
+```
+
+Get module Path.
+```php
+$module->getPath();
+```
+
+Get module Json file.
+```php
+$module->getModuleJson();
+```
 
 ## Publish Module
 
