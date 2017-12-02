@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "php" : ">=7.0",
+        "php" : "^7.0",
         "spatie/laravel-permission": "^2.7",
         "chumper/zipper": "1.0.x"
     },

@@ -253,7 +253,7 @@ Module::moduleRollback('test');
 
 Migrate the database to all modules
 ```php
-Module::moduleMigrateAll('test');
+Module::moduleMigrateAll();
 ```
 
 Rollback database to all modules.

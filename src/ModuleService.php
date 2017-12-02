@@ -105,6 +105,4 @@ class ModuleService extends BaseModel
         return $msj;
     }
 
-
-
 }
