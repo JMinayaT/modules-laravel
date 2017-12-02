@@ -80,21 +80,6 @@ class ModuleService extends BaseModel
         return  $this->migrator->migrate($module);
     }
 
-    public function moduleRollback($module)
-    {
-        $this->migrator->reset($module);
-        return true;
-    }
-
-    public function moduleMigrateReset()
-    {
-        $modules = $this->all();
-        foreach($modules as $module) {
-            $this->migrator->reset($module->name);
-        }
-        return "reset all migration";
-    }
-
     public function moduleMigrateAll()
     {
         $modules = $this->all();
@@ -103,5 +88,9 @@ class ModuleService extends BaseModel
             $msj[] =  $this->migrator->migrate($module->name);
         }
         return $msj;
+    }
+    public function moduleRollback($module)
+    { 
+        return  $this->migrator->rollback($module);
     }
 }
