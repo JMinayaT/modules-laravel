@@ -91,6 +91,7 @@ class ModuleService extends BaseModel
     }
     public function moduleRollback($module)
     { 
-        return  $this->migrator->rollback($module);
+         $this->migrator->rollback($module);
+         return  $this->migrator->dbGetNotes();
     }
 }

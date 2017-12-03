@@ -52,6 +52,21 @@ class ModuleMigrator
         return $this->migrator->getNotes();
     }
 
+    public function dbGetNotes()
+    {
+        $notes = $this->migrator->getNotes();
+        $nNotes = [];
+        foreach($notes as $note) {
+            $newNote = null;
+            $newNote = str_replace("<comment>", "", $note);
+            $newNote = str_replace("</comment>", "", $newNote);
+            $newNote = str_replace("<info>", "", $newNote);
+            $newNote = str_replace("</info>", "", $newNote);
+            ( strpos($newNote, 'back') == true ) ?  $nNotes[] = $newNote : null;
+        }
+        return (! empty($nNotes) ) ? $nNotes : 'Nothing to rollback'; 
+    }
+
     protected function getMigrationPaths($paths)
     {
         return collect($paths)->map(function ($path) {
