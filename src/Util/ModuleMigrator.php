@@ -1,6 +1,8 @@
 <?php
 namespace JMinayaT\Modules\Util;
 
+use Illuminate\Support\Facades\DB;
+
 class ModuleMigrator
 {
     /**
@@ -37,7 +39,11 @@ class ModuleMigrator
 
     public function rollback($module_name)
     {
-        $step = DB::select('SELECT batch from migrations ORDER by batch DESC LIMIT 1');
+        $mgt = DB::select('SELECT batch from migrations ORDER by batch DESC LIMIT 1');
+        $step = 0;
+        foreach($mgt as $n) {
+            $step = $n->batch;
+        }
         $this->prepareDatabase();
         $this->migrator->rollback($this->getMigrationPaths('modules/'.$module_name.'/Database/migrations/'),
         ['pretend' =>  null,
