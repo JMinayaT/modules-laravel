@@ -45,7 +45,8 @@ class ModuleMigrate extends Command
                 $this->error('Module "'.$name_module. '" does not exist!; run module:create NameModule');
                 return false;
             }
-            $mgt = $this->migrator->migrate($name_module);
+            $this->migrator->migrate($name_module);
+            $mgt = $this->migrator->cmdGetNotes('mg');
             foreach ($mgt as $msj) {
                 $this->output->writeln($msj);
             }
@@ -53,7 +54,8 @@ class ModuleMigrate extends Command
         }
         $modules = Module::all();
         foreach ($modules as $module) {
-            $mgt = $this->migrator->migrate($module->name);
+            $this->migrator->migrate($module->name);
+            $mgt = $this->migrator->cmdGetNotes('mg');
             foreach ($mgt as $msj) {
                 $this->output->writeln($msj);
             }

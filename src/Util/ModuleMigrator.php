@@ -34,7 +34,7 @@ class ModuleMigrator
         ['pretend' =>  null,
           'step'   =>  null,
         ]);
-        return $this->migrator->getNotes();
+      return true;
     }
 
     public function rollback($module_name)
@@ -49,10 +49,10 @@ class ModuleMigrator
         ['pretend' =>  null,
           'step'   =>  $step,
         ]);
-        return $this->migrator->getNotes();
+        return true;
     }
 
-    public function dbGetNotes()
+    public function viewGetNotes($ms)
     {
         $notes = $this->migrator->getNotes();
         $nNotes = [];
@@ -64,7 +64,15 @@ class ModuleMigrator
             $newNote = str_replace("</info>", "", $newNote);
             ( strpos($newNote, 'back') == true ) ?  $nNotes[] = $newNote : null;
         }
-        return (! empty($nNotes) ) ? $nNotes : 'Nothing to rollback'; 
+        $epmsj = ($ms == "mg") ? 'Nothing to migrate' : 'Nothing to rollback';
+        return (! empty($nNotes) ) ? $nNotes :  $epmsj; 
+    }
+
+     public function cmdGetNotes($ms)
+    {
+        $notes = $this->migrator->getNotes();
+        $epmsj = ($ms == "mg") ? 'Nothing to migrate' : 'Nothing to rollback';
+        return (! empty($nNotes) ) ? $notes :  $epmsj; 
     }
 
     protected function getMigrationPaths($paths)

@@ -85,13 +85,15 @@ class ModuleService extends BaseModel
         $modules = $this->all();
         $msj = [];
         foreach($modules as $module) {
-            $msj[] =  $this->migrator->migrate($module->name);
+            $this->migrator->migrate($module->name);
+            $msj[] =  $this->migrator->viewGetNotes('mg');
         }
         return $msj;
     }
     public function moduleRollback($module)
     { 
-         $this->migrator->rollback($module);
-         return  $this->migrator->dbGetNotes();
+        $this->migrator->rollback($module);
+        return $this->migrator->viwwGetNotes('rb');
+
     }
 }
