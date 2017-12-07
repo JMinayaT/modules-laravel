@@ -68,11 +68,20 @@ class ModuleMigrator
         return (! empty($nNotes) ) ? $nNotes :  $epmsj; 
     }
 
-     public function cmdGetNotes($ms)
+    public function cmdGetMigrateNotes()
     {
-        $notes = $this->migrator->getNotes();
-        $epmsj = ($ms == "mg") ? 'Nothing to migrate' : 'Nothing to rollback';
-        return (! empty($nNotes) ) ? $notes :  $epmsj; 
+        $notes[] = (! empty($this->migrator->getNotes()) ) ? $this->migrator->getNotes() : 'Nothing to migrate'; 
+        return $notes;
+    }
+
+    public function cmdGetRollbackNotes()
+    {
+        $newNotes = [];
+        foreach($this->migrator->getNotes() as $note) {
+            (strpos($note, 'Migration not found') == false ) ?  $newNotes[] = $note : null;
+        }
+        $notes[] = (! empty($newNotes) ) ? $newNotes : 'Nothing to rollback'; 
+        return $notes;
     }
 
     protected function getMigrationPaths($paths)

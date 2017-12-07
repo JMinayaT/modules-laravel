@@ -45,19 +45,21 @@ class ModuleRollback extends Command
                 $this->error('Module "'.$name_module. '" does not exist!; run module:create NameModule');
                 return false;
             }
+            $this->output->writeln('Module Name: '.$name_module);
             $this->migrator->rollback($name_module);
-            $mesaje = $this->migrator->cmdGetNotes('rb');
-            foreach ($mesaje as $msj) {
-                $this->output->writeln($msj);
+            $notes = $this->migrator->cmdGetRollbackNotes();
+            foreach ($notes as $note) {
+                $this->output->writeln($note);
             }
             return false;
         }
         $modules = Module::all();
         foreach ($modules as $module) {
+            $this->output->writeln('Module Name: '.$module->name);
             $this->migrator->rollback($module->name);
-            $mgt = $this->migrator->cmdGetNotes('rb');
-            foreach ($mgt as $msj) {
-                $this->output->writeln($msj);
+            $notes = $this->migrator->cmdGetRollbackNotes();
+            foreach ($notes as $note) {
+                $this->output->writeln($note);
             }
         }
     }
