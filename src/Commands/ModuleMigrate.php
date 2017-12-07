@@ -45,7 +45,6 @@ class ModuleMigrate extends Command
                 $this->error('Module "'.$name_module. '" does not exist!; run module:create NameModule');
                 return false;
             }
-            $this->output->writeln('Module Name: '.$name_module);
             $this->migrator->migrate($name_module);
             $notes = $this->migrator->cmdGetMigrateNotes();
             foreach ($notes as $note) {

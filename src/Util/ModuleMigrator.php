@@ -52,20 +52,39 @@ class ModuleMigrator
         return true;
     }
 
-    public function viewGetNotes($ms)
+    protected function getMigrationPaths($paths)
+    {
+        return collect($paths)->map(function ($path) {
+            return base_path().'/'.$path;
+        })->all();
+    }
+
+    public function viewGetMigrateNotes()
     {
         $notes = $this->migrator->getNotes();
-        $nNotes = [];
+        $newNotes = [];
         foreach($notes as $note) {
-            $newNote = null;
             $newNote = str_replace("<comment>", "", $note);
             $newNote = str_replace("</comment>", "", $newNote);
             $newNote = str_replace("<info>", "", $newNote);
             $newNote = str_replace("</info>", "", $newNote);
-            ( strpos($newNote, 'back') == true ) ?  $nNotes[] = $newNote : null;
+            ( strpos($newNote, 'back') == true ) ?  $newNotes[] = $newNote : null;
         }
-        $epmsj = ($ms == "mg") ? 'Nothing to migrate' : 'Nothing to rollback';
-        return (! empty($nNotes) ) ? $nNotes :  $epmsj; 
+        return (! empty($newNotes) ) ? $newNotes :  'Nothing to migrate'; 
+    }
+    public function viewGetRollbackNotes()
+    {
+        $notes = $this->migrator->getNotes();
+        $newNotes = [];
+        foreach($notes as $note) {
+            $newNote = str_replace("<comment>", "", $note);
+            $newNote = str_replace("</comment>", "", $newNote);
+            $newNote = str_replace("<info>", "", $newNote);
+            $newNote = str_replace("</info>", "", $newNote);
+            (strpos($newNote, 'back') == true) ?  $newNotes[] = $newNote : null;
+            (strpos($newNote, 'Migration not found') == false ) ?  $newNotes[] = $newNote : null;
+        }
+        return (! empty($newNotes) ) ? $newNotes :  'Nothing to migrate'; 
     }
 
     public function cmdGetMigrateNotes()
@@ -83,12 +102,4 @@ class ModuleMigrator
         $notes[] = (! empty($newNotes) ) ? $newNotes : 'Nothing to rollback'; 
         return $notes;
     }
-
-    protected function getMigrationPaths($paths)
-    {
-        return collect($paths)->map(function ($path) {
-            return base_path().'/'.$path;
-        })->all();
-    }
-
 }

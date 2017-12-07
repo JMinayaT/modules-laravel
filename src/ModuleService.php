@@ -76,24 +76,37 @@ class ModuleService extends BaseModel
     }
 
     public function moduleMigrate($module)
-    {
-        return  $this->migrator->migrate($module);
+    {  
+        $this->migrator->migrate($module);
+        return $this->migrator->viewGetMigrateNotes();
+
     }
 
     public function moduleMigrateAll()
     {
         $modules = $this->all();
-        $msj = [];
-        foreach($modules as $module) {
+        $notes = [];
+        foreach ($modules as $module) {
             $this->migrator->migrate($module->name);
-            $msj[] =  $this->migrator->viewGetNotes('mg');
+            $notes[] = $this->migrator->viewGetMigrateNotes();
         }
-        return $msj;
+        return $notes;
     }
-    public function moduleRollback($module)
-    { 
-        $this->migrator->rollback($module);
-        return $this->migrator->viwwGetNotes('rb');
 
+    public function moduleRollback($module)
+    {
+        $this->migrator->rollback($module);
+        return $this->migrator->viewGetRollbackNotes();
+    }
+
+    public function moduleRollbackAll()
+    {
+        $modules = $this->all();
+        $notes = [];
+        foreach ($modules as $module) {
+            $this->migrator->rollback($module->name);
+            $notes[] = $this->migrator->viewGetRollbackNotes();
+        }
+        return $notes;
     }
 }

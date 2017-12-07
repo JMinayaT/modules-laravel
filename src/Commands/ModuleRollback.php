@@ -45,7 +45,6 @@ class ModuleRollback extends Command
                 $this->error('Module "'.$name_module. '" does not exist!; run module:create NameModule');
                 return false;
             }
-            $this->output->writeln('Module Name: '.$name_module);
             $this->migrator->rollback($name_module);
             $notes = $this->migrator->cmdGetRollbackNotes();
             foreach ($notes as $note) {
