@@ -66,11 +66,11 @@ class ModuleMigrator
         foreach($notes as $note) {
             $newNote = str_replace("<comment>", "", $note);
             $newNote = str_replace("</comment>", "", $newNote);
-            $newNote = str_replace("<info>", "", $newNote);
+            $newNote = str_replace("<info>", "",$newNote);
             $newNote = str_replace("</info>", "", $newNote);
-            ( strpos($newNote, 'back') == true ) ?  $newNotes[] = $newNote : null;
+            $newNotes[] = $newNote;
         }
-        return (! empty($newNotes) ) ? $newNotes :  'Nothing to migrate'; 
+        return $newNotes; 
     }
     public function viewGetRollbackNotes()
     {
@@ -81,7 +81,6 @@ class ModuleMigrator
             $newNote = str_replace("</comment>", "", $newNote);
             $newNote = str_replace("<info>", "", $newNote);
             $newNote = str_replace("</info>", "", $newNote);
-            (strpos($newNote, 'back') == true) ?  $newNotes[] = $newNote : null;
             (strpos($newNote, 'Migration not found') == false ) ?  $newNotes[] = $newNote : null;
         }
         return (! empty($newNotes) ) ? $newNotes :  'Nothing to migrate'; 
