@@ -8,6 +8,7 @@
         "modular"
     ],
     "license": "MIT",
+    "type": "project",
     "authors": [
         {
             "name": "Javier Minaya Trinidad",
@@ -33,6 +34,6 @@
               }
          }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
