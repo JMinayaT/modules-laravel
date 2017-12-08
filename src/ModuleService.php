@@ -86,8 +86,9 @@ class ModuleService extends BaseModel
     {
         $modules = $this->all();
         $notes = [];
-         foreach ($modules as $module) {
-            $mgtNotes = $this->migrator->migrate($module->name);
+        foreach ($modules as $module) {
+            $this->migrator->migrate($module->name);
+            $mgtNotes = $this->migrator->viewGetMigrateNotes();;
             array_unshift($mgtNotes,$module->name);
             $notes[] = $mgtNotes;
         }
@@ -105,7 +106,8 @@ class ModuleService extends BaseModel
         $modules = $this->all();
         $notes = [];
         foreach ($modules as $module) {
-            $mgtNotes = $this->migrator->rollback($module->name);
+            $this->migrator->rollback($module->name);
+            $mgtNotes = $this->migrator->viewGetRollbackNotes();;
             array_unshift($mgtNotes,$module->name);
             $notes[] = $mgtNotes;
         }
