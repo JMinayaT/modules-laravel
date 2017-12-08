@@ -15,6 +15,7 @@
             "email": "javiermt05@gmail.com"
         }
     ],
+    "minimum-stability": "stable",
     "require": {
         "php" : "^7.0",
         "chumper/zipper": "1.0.x"
@@ -33,6 +34,5 @@
                 "Module": "JMinayaT\\Modules\\Facades\\Module"
               }
          }
-    },
-    "minimum-stability": "stable"
+    }
 }
