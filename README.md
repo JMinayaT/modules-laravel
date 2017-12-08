@@ -5,8 +5,6 @@
 * [Artisan Commands](#artisan-commands)
 * [Facade methods](#facade-methods)
 * [Module Methods](#module-methods)
-* [Publish Module](#publish-module)
-
 
 ## Installation
 Install the package through the composer.
@@ -301,9 +299,6 @@ Get module Json file.
 ```php
 $module->getModuleJson();
 ```
-
-## Publish Module
-
 
 ## License
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
