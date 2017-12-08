@@ -42,7 +42,7 @@ php artisan migrate
 
 You can publish the Config file (it's optional).
 ``` bash
-php artisan vendor:publish --provider="JMinayaT\Modules\ModulesServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="JMinayaT\Modules\ModulesServiceProvider" --tag="config"
 ```
 When published, the `config/modules.php ` Config file contains:
 ```php
