@@ -10,7 +10,7 @@
 Install the package through the composer.
 
 ``` bash
-composer require javierminayat/modules-laravel
+composer require jminayat/modules-laravel
 ```
 
 You need to load the module folder since it does not load automatically. You can autoload your modules using `psr-4`.
