@@ -8,7 +8,10 @@ use JMinayaT\Modules\Models\Module;
 use JMinayaT\Modules\Commands\CreateModule;
 use JMinayaT\Modules\Commands\CreateController;
 use JMinayaT\Modules\Commands\CreateModel;
+use JMinayaT\Modules\Commands\CreateFactory;
+use JMinayaT\Modules\Commands\CreateSeeder;
 use JMinayaT\Modules\Commands\CreateMigration;
+use JMinayaT\Modules\Commands\CreateTest;
 use JMinayaT\Modules\Commands\ModuleList;
 use JMinayaT\Modules\Commands\ModuleActive;
 use JMinayaT\Modules\Commands\ModuleDelete;
@@ -17,6 +20,7 @@ use JMinayaT\Modules\Commands\PublishModule;
 use JMinayaT\Modules\Commands\ModuleInstall;
 use JMinayaT\Modules\Commands\ModuleMigrate;
 use JMinayaT\Modules\Commands\ModuleRollback;
+use JMinayaT\Modules\Commands\ModuleSeed;
 
 class ModulesServiceProvider extends ServiceProvider
 {
@@ -125,12 +129,16 @@ class ModulesServiceProvider extends ServiceProvider
 
     protected function publishesCommands()
     {
+
         if ($this->app->runningInConsole()) {
             $this->commands([
                 CreateModule::class,
                 CreateController::class,
                 CreateModel::class,
+                CreateFactory::class,
+                CreateSeeder::class,
                 CreateMigration::class,
+                CreateTest::class,
                 ModuleList::class,
                 ModuleActive::class,
                 ModuleDelete::class,
@@ -138,7 +146,8 @@ class ModulesServiceProvider extends ServiceProvider
                 PublishModule::class,
                 ModuleInstall::class,
                 ModuleMigrate::class,
-                ModuleRollback::class
+                ModuleRollback::class,
+                ModuleSeed::class
             ]);
         }
     }

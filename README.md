@@ -166,6 +166,26 @@ Create a new module migration.
 ```
 php artisan module:make-migration test create_tests_table
 ```
+**module:make-seeder**
+
+Create a new module seeder class.
+```
+php artisan module:make-seeder test testSeeder
+```
+
+**module:make-factory**
+
+Create a new module factory class.
+```
+php artisan module:make-factory test testFactory
+```
+
+**module:make-test**
+
+Create a new module test class.
+```
+php artisan module:make-test test userTest
+```
 
 **module:publish**
 
@@ -200,6 +220,17 @@ php artisan module:rollback
 For rollback a specific module to use:
 ```
 php artisan module:rollback test
+```
+
+**module:seed**
+
+Module Seed the database with records.
+```
+php artisan module:sedd
+```
+For seed a specific module to use:
+```
+php artisan module:seed test
 ```
 
 ## Facade Methods

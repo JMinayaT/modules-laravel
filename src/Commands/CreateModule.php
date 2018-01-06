@@ -51,6 +51,8 @@ class CreateModule extends Command
         $path = base_path('modules/'.$name_module .'/');
         $this->makeDirectorys($path);
         $this->copyRoutes($path);
+        $this->copyModuleFilesClass($path,$name_module);
+
         $this->mnc->registerModuleDB($name_module,$dcp, $name);
 
         if ($this->option('controller')) {
@@ -88,13 +90,24 @@ class CreateModule extends Command
             $this->files->makeDirectory($path.'Routes/', 0775, true);
             $this->files->makeDirectory($path.'Models/', 0775, true);
             $this->files->makeDirectory($path.'Database/', 0775, true);
-            $this->files->makeDirectory($path.'Database/migrations/', 0775, true);
+            $this->files->makeDirectory($path.'Database/Migrations/', 0775, true);
+            $this->files->makeDirectory($path.'Database/Factories/', 0775, true);
+            $this->files->makeDirectory($path.'Database/Seeds/', 0775, true);
+            $this->files->makeDirectory($path.'Tests/', 0775, true);
       }
     }
 
-    protected function copyRoutes($path){
+    protected function copyRoutes($path)
+    {
         $this->files->put($path.'Routes/web.php', $this->files->get($this->mnc->getStub('route.web')));
         $this->files->put($path.'Routes/api.php', $this->files->get($this->mnc->getStub('route.api')));
+    }
+
+    protected function copyModuleFilesClass($path,$name_module)
+    {
+        $name = $this->mnc->qualifyClass($name_module);
+
+        $this->files->put($path.'Database/Seeds/DatabaseSeeder.php',$this->mnc->buildClass($name, '','database-seeder'));          
     }
 
 }

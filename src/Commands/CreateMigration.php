@@ -47,7 +47,7 @@ class CreateMigration extends Command
         }
 
         $timestamp = date('Y_m_d_His', time());
-        $path_migration = $path . 'Database/migrations/'.$timestamp.'_'.ucfirst($name_migration).'.php';
+        $path_migration = $path . 'Database/Migrations/'.$timestamp.'_'.ucfirst($name_migration).'.php';
 
         $type = 'plain';
         if ($this->option('model')) {
@@ -58,7 +58,7 @@ class CreateMigration extends Command
             $this->files->put($path_migration, $this->builMigration($name_migration, $type));
         }
         else if($type == 'model'){
-            $path_migrationM = $path . 'Database/migrations/'.$timestamp.'_create_'.$model.'_table.php';
+            $path_migrationM = $path . 'Database/Migrations/'.$timestamp.'_create_'.$model.'_table.php';
             $this->files->put($path_migrationM, $this->builMigrationModel($name_migration, $model ,$type));
         }
 
@@ -67,13 +67,13 @@ class CreateMigration extends Command
 
     protected function builMigration($name_migration, $type)
     {
-        $stub = $this->files->get(__DIR__.'/stubs/migration.'.$type.'.stub');
+        $stub = $this->files->get(__DIR__.'/stubs/Migration.'.$type.'.stub');
         return $this->mnc->replaceClass($stub, $name_migration);
     }
 
     protected function builMigrationModel($name_migration,$model, $type)
     {
-        $stub = $this->files->get(__DIR__.'/stubs/migration.'.$type.'.stub');
+        $stub = $this->files->get(__DIR__.'/stubs/Migration.'.$type.'.stub');
         return $this->mnc->replaceModelTable($this->mnc->replaceClass($stub, $name_migration), $model);
     }
 

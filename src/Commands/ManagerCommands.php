@@ -56,6 +56,12 @@ class ManagerCommands
       return __DIR__.'/stubs/'.$name.'.stub';
     }
 
+    public function getFileStub($name)
+    {
+        $file = new Filesystem();
+        return $file->get(__DIR__.'/stubs/'.$name.'.stub');
+    }
+
     /**
      * Replace the namespace for the given stub.
      *
