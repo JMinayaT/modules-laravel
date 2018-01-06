@@ -4,6 +4,8 @@ namespace JMinayaT\Modules;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Factory as EloquentFactory;
+use Faker\Generator as FakerGenerator;
 use JMinayaT\Modules\Models\Module;
 use JMinayaT\Modules\Commands\CreateModule;
 use JMinayaT\Modules\Commands\CreateController;
@@ -24,6 +26,28 @@ use JMinayaT\Modules\Commands\ModuleSeed;
 
 class ModulesServiceProvider extends ServiceProvider
 {
+
+    /**
+     * name module.
+     *
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * Route for JS.
+     *
+     * @var string
+     */
+    protected $routeJS;
+
+    /**
+     * Route for CSS.
+     *
+     * @var undefined
+     */
+    protected $routeCSS;
+
     /**
      * Bootstrap the application services.
      *
@@ -35,44 +59,43 @@ class ModulesServiceProvider extends ServiceProvider
         $this->publishesConfig();
         $this->publishesMigrations();
         $this->publishesCommands();
-        $module = new Module();
+        $module = new Module();  
+        if (Schema::hasTable($module->getTable())) {
+            $modules = Module::all();
+            foreach ( $modules as $module) {
+                if($module->active){
+                    $path = base_path('modules/' . $module->name . '/');
+                    $this->name = $module->name;
+                    if (is_dir($path.'Routes')) {
+                        $this->webRoutes($module->name);
+                        $this->apiRoutes($module->name);
+                    }
+                    if (is_dir($path.'Resources/Views/')) {
+                        $this->loadViews($module->name);
+                    }
+                    if (is_dir($path.'Resources/Lang/')) {
+                        $this->loadTranslations($module->name);
+                    }
+                    if (is_dir($path.'Database/migrations/')) {
+                        $this->loadMigrations($module->name);
+                    }
+                    if (is_dir($path.'Database/Factories/')) {  
+                        $this->app->singleton(EloquentFactory::class, function ($app) {
+                            $faker = $app->make(FakerGenerator::class);
+                            return EloquentFactory::construct($faker, 'modules/'.$this->name.'/Database/Factories'); 
+                        });
+                    }
+                    if (is_dir($path.'Resources/Assets/js/')) {
+                        $this->JsFileRoute(base_path('modules/' . $module->name . '/Resources/Assets/js/'),$module->name);
+                    }
+                    if (is_dir($path.'Resources/Assets/css/')) {
+                        $this->CssFileRoute(base_path('modules/' . $module->name . '/Resources/Assets/css/'),$module->name);
+                    }
+                }
+            }
+        }
 
-          if (Schema::hasTable($module->getTable()) ) {
-              $modules = Module::all();
-
-              foreach ($modules as $module) {
-
-                  if($module->active){
-                      $path = base_path('modules/' . $module->name . '/');
-
-                      if (is_dir($path)) {
-                          $this->webRoutes($module->name);
-                          $this->apiRoutes($module->name);
-
-                          if (is_dir(base_path('modules/' . $module->name . '/Resources/Views/'))) {
-                              $this->loadViews($module->name);
-                          }
-
-                          if (is_dir(base_path('modules/' . $module->name . '/Resources/Lang/'))) {
-                              $this->loadTranslations($module->name);
-                          }
-
-                          if (is_dir(base_path('modules/' . $module->name . '/Database/migrations/'))) {
-                              $this->loadMigrations($module->name);
-                          }
-                      }
-
-                      if (is_dir(base_path('modules/' . $module->name . '/Resources/Assets/js/'))) {
-                          $this->JsFileRoute(base_path('modules/' . $module->name . '/Resources/Assets/js/'),$module->name);
-                      }
-
-                      if (is_dir(base_path('modules/' . $module->name . '/Resources/Assets/css/'))) {
-                          $this->CssFileRoute(base_path('modules/' . $module->name . '/Resources/Assets/css/'),$module->name);
-                      }
-                  }
-              }
-          }
-      }
+    }
 
     /**
      * Register the application services.
@@ -90,6 +113,11 @@ class ModulesServiceProvider extends ServiceProvider
         );
     }
 
+    /**
+     * Create modules directory if it does not exist
+     *
+     * @return void
+     */
     protected function createModulesDirectory()
     {
         if ( !(is_dir(base_path('modules/'))) ) {
@@ -122,14 +150,24 @@ class ModulesServiceProvider extends ServiceProvider
             ],'migrations');
     }
 
+    /**
+     * Load migrations for all.
+     *
+     * @param string $module
+     * @return void
+     */
     protected function loadMigrations($module)
     {
         $this->loadMigrationsFrom(base_path('modules/'.$module.'/Database/migrations/'));
     }
 
+    /**
+     * Publishes commands module.
+     *
+     * @return void
+     */
     protected function publishesCommands()
     {
-
         if ($this->app->runningInConsole()) {
             $this->commands([
                 CreateModule::class,
@@ -153,8 +191,9 @@ class ModulesServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the Web Routes for application modules.
+     * web routes for all modules.
      *
+     * @param string $module
      * @return void
      */
     protected function webRoutes($module)
@@ -193,7 +232,13 @@ class ModulesServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(base_path('modules/'.$module.'/Resources/Lang'),$module);
     }
 
-    protected $routeJS = '';
+    /**
+     * Load js files for all modules.
+     *
+     * @param string $rute
+     * @param string $module
+     * @return void
+     */
     protected function JsFileRoute($rute,$module)
     {
           $this->routeJS = $rute;
@@ -206,7 +251,14 @@ class ModulesServiceProvider extends ServiceProvider
               return $response;
           });
     }
-    protected $routeCSS = '';
+
+    /**
+     * Load css files for all modules.
+     *
+     * @param string $rute
+     * @param string $module
+     * @return void
+     */
     protected function CssFileRoute($rute,$module)
     {
         $this->routeCSS = $rute;
