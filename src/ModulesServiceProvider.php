@@ -200,7 +200,7 @@ class ModulesServiceProvider extends ServiceProvider
      */
     protected function webRoutes($module)
     {
-        Route::middleware('web')->namespace('Modules\Http\\'.$module.'\Controllers')
+        Route::middleware('web')->namespace('Modules\\'.$module.'\Http\Controllers')
                                 ->group(base_path('modules/'.$module.'/Routes/web.php'));
     }
 
@@ -211,7 +211,7 @@ class ModulesServiceProvider extends ServiceProvider
      */
     protected function apiRoutes($module)
     {
-        Route::prefix('api')->middleware('api')->namespace('Modules\Http\\'.$module.'\Controllers')->group(base_path('modules/'.$module.'/Routes/api.php'));
+        Route::prefix('api')->middleware('api')->namespace('Modules\\'.$module.'\Http\Controllers')->group(base_path('modules/'.$module.'/Routes/api.php'));
     }
 
     /**
