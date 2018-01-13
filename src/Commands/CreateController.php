@@ -46,7 +46,7 @@ class CreateController extends Command
             return false;
         }
         $path = base_path('modules/'.$name_module .'/');
-        $path_controller = $path . 'Controllers/'.ucfirst($name_controller).'.php';
+        $path_controller = $path . 'Http/Controllers/'.ucfirst($name_controller).'.php';
 
         if($this->files->isFile($path_controller)){
             $this->error('Module "'.$name_module. '" Controller already exists!');

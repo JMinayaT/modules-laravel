@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DummyModule\Controllers;
+namespace Modules\DummyModule\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DummyRootNamespaceHttp\Controllers\Controller;

@@ -150,6 +150,13 @@ Create a new module controller.
 php artisan module:make-controller test TestController
 ```
 
+**module:make-middleware**
+
+Create a new module middleware class.
+```
+php artisan module:make-middleware test TestMiddleware
+```
+
 **module:make-model**
 
 Create a new module model.

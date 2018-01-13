@@ -82,7 +82,8 @@ class CreateModule extends Command
     {
         if (! $this->files->isDirectory($path)) {
             $this->files->makeDirectory($path, 0775, true);
-            $this->files->makeDirectory($path.'Controllers/', 0775, true);
+            $this->files->makeDirectory($path.'Http/Controllers/', 0775, true);
+            $this->files->makeDirectory($path.'Http/Middleware/', 0775, true);
             $this->files->makeDirectory($path.'Resources/Assets/js/', 0775, true);
             $this->files->makeDirectory($path.'Resources/Assets/css/', 0775, true);
             $this->files->makeDirectory($path.'Resources/Lang/', 0775, true);
