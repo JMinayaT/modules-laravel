@@ -10,6 +10,7 @@ use JMinayaT\Modules\Models\Module;
 use JMinayaT\Modules\Commands\CreateModule;
 use JMinayaT\Modules\Commands\CreateController;
 use JMinayaT\Modules\Commands\CreateMiddleware;
+use JMinayaT\Modules\Commands\CreateRequest;
 use JMinayaT\Modules\Commands\CreateModel;
 use JMinayaT\Modules\Commands\CreateFactory;
 use JMinayaT\Modules\Commands\CreateSeeder;
@@ -174,6 +175,7 @@ class ModulesServiceProvider extends ServiceProvider
                 CreateModule::class,
                 CreateController::class,
                 CreateMiddleware::class,
+                CreateRequest::class,
                 CreateModel::class,
                 CreateFactory::class,
                 CreateSeeder::class,

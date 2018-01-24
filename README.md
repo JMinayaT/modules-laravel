@@ -157,6 +157,13 @@ Create a new module middleware class.
 php artisan module:make-middleware test TestMiddleware
 ```
 
+**module:make-request**
+
+Create a new module request class.
+```
+php artisan module:make-request test TestRequest
+```
+
 **module:make-model**
 
 Create a new module model.
