@@ -67,7 +67,6 @@ class ModulesServiceProvider extends ServiceProvider
             foreach ( $modules as $module) {
                 if($module->active){
                     $path = base_path('modules/' . $module->name . '/');
-                    $this->name = $module->name;
                     if (is_dir($path.'Routes')) {
                         $this->webRoutes($module->name);
                         $this->apiRoutes($module->name);
