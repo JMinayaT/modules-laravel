@@ -81,11 +81,13 @@ class ModulesServiceProvider extends ServiceProvider
                     if (is_dir($path.'Database/migrations/')) {
                         $this->loadMigrations($module->name);
                     }
-                    if (is_dir($path.'Database/Factories/')) {  
-                        $this->app->singleton(EloquentFactory::class, function ($app) {
+                    if (is_dir($path.'Database/Factories/')) {
+                        $this->name = $module->name;
+                        $this->app->singleton(EloquentFactory::class, function ($app){
                             $faker = $app->make(FakerGenerator::class);
-                            return EloquentFactory::construct($faker, 'modules/'.$this->name.'/Database/Factories'); 
-                        });
+                            $factories_path = base_path('modules/' . $this->name . '/Database/Factories');;
+                            return EloquentFactory::construct($faker, $factories_path);
+                         });
                     }
                     if (is_dir($path.'Resources/Assets/js/')) {
                         $this->JsFileRoute(base_path('modules/' . $module->name . '/Resources/Assets/js/'),$module->name);
