@@ -200,6 +200,12 @@ Create a new module test class.
 ```
 php artisan module:make-test test userTest
 ```
+**module:make-policy**
+
+Create a new module policy class.
+```
+php artisan module:make-policy test testPolicy
+```
 
 **module:publish**
 

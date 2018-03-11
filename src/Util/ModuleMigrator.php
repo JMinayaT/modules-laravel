@@ -30,7 +30,7 @@ class ModuleMigrator
     public function migrate($module_name)
     {
         $this->prepareDatabase();
-        $this->migrator->run($this->getMigrationPaths('modules/'.$module_name.'/Database/migrations/'),
+        $this->migrator->run($this->getMigrationPaths('modules/'.$module_name.'/Database/Migrations/'),
         ['pretend' =>  null,
           'step'   =>  null,
         ]);
@@ -45,7 +45,7 @@ class ModuleMigrator
             $step = $n->batch;
         }
         $this->prepareDatabase();
-        $this->migrator->rollback($this->getMigrationPaths('modules/'.$module_name.'/Database/migrations/'),
+        $this->migrator->rollback($this->getMigrationPaths('modules/'.$module_name.'/Database/Migrations/'),
         ['pretend' =>  null,
           'step'   =>  $step,
         ]);
