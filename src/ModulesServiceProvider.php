@@ -16,6 +16,7 @@ use JMinayaT\Modules\Commands\CreateFactory;
 use JMinayaT\Modules\Commands\CreateSeeder;
 use JMinayaT\Modules\Commands\CreateMigration;
 use JMinayaT\Modules\Commands\CreateTest;
+use JMinayaT\Modules\Commands\CreatePolicy;
 use JMinayaT\Modules\Commands\ModuleList;
 use JMinayaT\Modules\Commands\ModuleActive;
 use JMinayaT\Modules\Commands\ModuleDelete;
@@ -61,8 +62,13 @@ class ModulesServiceProvider extends ServiceProvider
         $this->publishesConfig();
         $this->publishesMigrations();
         $this->publishesCommands();
-        $module = new Module();  
-        if (Schema::hasTable($module->getTable())) {
+        try {
+            \DB::connection()->getPdo();
+        } catch (\Exception $e) {
+            return true;
+        }
+        $module = new Module();
+        if(Schema::hasTable($module->getTable())){
             $modules = Module::all();
             foreach ( $modules as $module) {
                 if($module->active){
@@ -97,7 +103,6 @@ class ModulesServiceProvider extends ServiceProvider
                 }
             }
         }
-
     }
 
     /**
@@ -182,6 +187,7 @@ class ModulesServiceProvider extends ServiceProvider
                 CreateSeeder::class,
                 CreateMigration::class,
                 CreateTest::class,
+                CreatePolicy::class,
                 ModuleList::class,
                 ModuleActive::class,
                 ModuleDelete::class,

@@ -44,7 +44,7 @@ class ManagerCommands
         return trim(implode('\\', array_slice(explode('\\', $name), 0, -1)), '\\');
     }
 
-    public function buildClass($name, $class,$type)
+    public function buildClass($name, $class, $type)
     {
         $file = new Filesystem();
         $stub = $file->get($this->getStub($type));

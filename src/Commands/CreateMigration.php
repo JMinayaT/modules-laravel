@@ -67,13 +67,13 @@ class CreateMigration extends Command
 
     protected function builMigration($name_migration, $type)
     {
-        $stub = $this->files->get(__DIR__.'/stubs/Migration.'.$type.'.stub');
+        $stub = $this->files->get(__DIR__.'/stubs/migration.'.$type.'.stub');
         return $this->mnc->replaceClass($stub, $name_migration);
     }
 
     protected function builMigrationModel($name_migration,$model, $type)
     {
-        $stub = $this->files->get(__DIR__.'/stubs/Migration.'.$type.'.stub');
+        $stub = $this->files->get(__DIR__.'/stubs/migration.'.$type.'.stub');
         return $this->mnc->replaceModelTable($this->mnc->replaceClass($stub, $name_migration), $model);
     }
 
