@@ -8,5 +8,13 @@ return [
    */
 
    'table_name'  =>  'modules',
+   
+   /*
+   *Enable module cache
+   */
+  'cache' => [
+    'enabled' => true,
+    'key' => 'app-modules',
+  ],
 
 ];

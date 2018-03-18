@@ -3,13 +3,13 @@ namespace JMinayaT\Modules\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use JMinayaT\Modules\Commands\ManagerCommands;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use JMinayaT\Modules\Models\Module;
+use JMinayaT\Modules\Util\ModuleData;
 use Illuminate\Filesystem\Filesystem;
 
-class ModuleSeed extends Command
+class ModuleSeedCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -25,12 +25,14 @@ class ModuleSeed extends Command
      */
     protected $description = 'Module Seed the database with records';
 
+    protected $files;
+    protected $moduledt;
 
-    public function __construct(Filesystem $files ,ManagerCommands $mnc)
+    public function __construct(Filesystem $files ,ModuleData $moduledt)
     {
         parent::__construct();
         $this->files = $files;
-        $this->mnc = new $mnc;
+        $this->moduledt = $moduledt;
     }
 
     /**
@@ -42,15 +44,15 @@ class ModuleSeed extends Command
     {
     
         if($this->argument('module')) {
-            $name_module = Str::studly($this->argument('module'));
-            if (!$this->mnc->hasModule($name_module)) {
-                $this->error('Module "'.$name_module. '" does not exist!; run module:create <NameModule>');
+            $name = Str::studly($this->argument('module'));
+            if(! $this->moduledt->exists($name)) {
+                $this->error('Module "'.$name. '" does not exist!');
                 return false;
             }
-            if(! $this->isFileDBS($name_module)){
+            if(! $this->isFileDBS($name)){
                 return false;
             }
-            $this->dbSeed('Modules\\'.$name_module.'\Database\Seeds\DatabaseSeeder');
+            $this->dbSeed('Modules\\'.$name.'\Database\Seeds\DatabaseSeeder');
             return false;
         }
 

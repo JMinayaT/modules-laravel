@@ -1,7 +1,5 @@
 <?php
-
-namespace Modules\DummyModule\Policies;
-
+namespace DummyNamespace;
 
 use NamespacedDummyUserModel;
 use Illuminate\Auth\Access\HandlesAuthorization;

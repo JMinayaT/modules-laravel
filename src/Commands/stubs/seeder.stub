@@ -1,7 +1,5 @@
 <?php
 
-namespace Modules\DummyModule\Database\Seeds;
-
 use Illuminate\Database\Seeder;
 
 class DummyClass extends Seeder
@@ -13,6 +11,6 @@ class DummyClass extends Seeder
      */
     public function run()
     {
-        // 
+        //
     }
 }

@@ -3,9 +3,9 @@
 	"alias": "DummyAlias",
 	"description": "DummyDescription",
 	"authors": {
-		"name": "DummyAuthorName",
-		"email": "DummyEmailAuthor"
+		"name": "",
+		"email": ""
 	},
-	"type": "dummyType",
-	"version": "dummyVersion"
+	"type": "dev",
+	"version": "0.0.0"
 }

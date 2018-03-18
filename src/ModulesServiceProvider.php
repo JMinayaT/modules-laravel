@@ -2,30 +2,23 @@
 namespace JMinayaT\Modules;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Eloquent\Factory as EloquentFactory;
-use Faker\Generator as FakerGenerator;
-use JMinayaT\Modules\Models\Module;
-use JMinayaT\Modules\Commands\CreateModule;
-use JMinayaT\Modules\Commands\CreateController;
-use JMinayaT\Modules\Commands\CreateMiddleware;
-use JMinayaT\Modules\Commands\CreateRequest;
-use JMinayaT\Modules\Commands\CreateModel;
-use JMinayaT\Modules\Commands\CreateFactory;
-use JMinayaT\Modules\Commands\CreateSeeder;
-use JMinayaT\Modules\Commands\CreateMigration;
-use JMinayaT\Modules\Commands\CreateTest;
-use JMinayaT\Modules\Commands\CreatePolicy;
-use JMinayaT\Modules\Commands\ModuleList;
-use JMinayaT\Modules\Commands\ModuleActive;
-use JMinayaT\Modules\Commands\ModuleDelete;
-use JMinayaT\Modules\Commands\ModuleUp;
-use JMinayaT\Modules\Commands\PublishModule;
-use JMinayaT\Modules\Commands\ModuleInstall;
-use JMinayaT\Modules\Commands\ModuleMigrate;
-use JMinayaT\Modules\Commands\ModuleRollback;
-use JMinayaT\Modules\Commands\ModuleSeed;
+use JMinayaT\Modules\Commands\CreateModuleCommand;
+use JMinayaT\Modules\Commands\CreateModelCommand;
+use JMinayaT\Modules\Commands\CreateControllerCommand;
+use JMinayaT\Modules\Commands\CreateMigrationCommand;
+use JMinayaT\Modules\Commands\CreateFactoryCommand;
+use JMinayaT\Modules\Commands\CreateSeederCommand;
+use JMinayaT\Modules\Commands\CreateMiddlewareCommand;
+use JMinayaT\Modules\Commands\CreatePolicyCommand;
+use JMinayaT\Modules\Commands\CreateRequestCommand;
+use JMinayaT\Modules\Commands\CreateTestCommand;
+use JMinayaT\Modules\Commands\ModuleActiveCommand;
+use JMinayaT\Modules\Commands\ModuleListCommand;
+use JMinayaT\Modules\Commands\ModuleMigrateCommand;
+use JMinayaT\Modules\Commands\ModuleRollbackCommand;
+use JMinayaT\Modules\Commands\ModuleSeedCommand;
+use JMinayaT\Modules\Commands\ModuleDeleteCommand;
+use JMinayaT\Modules\Commands\PublishModuleCommand;
 
 class ModulesServiceProvider extends ServiceProvider
 {
@@ -38,20 +31,6 @@ class ModulesServiceProvider extends ServiceProvider
     protected $name;
 
     /**
-     * Route for JS.
-     *
-     * @var string
-     */
-    protected $routeJS;
-
-    /**
-     * Route for CSS.
-     *
-     * @var undefined
-     */
-    protected $routeCSS;
-
-    /**
      * Bootstrap the application services.
      *
      * @return void
@@ -62,47 +41,6 @@ class ModulesServiceProvider extends ServiceProvider
         $this->publishesConfig();
         $this->publishesMigrations();
         $this->publishesCommands();
-        try {
-            \DB::connection()->getPdo();
-        } catch (\Exception $e) {
-            return true;
-        }
-        $module = new Module();
-        if(Schema::hasTable($module->getTable())){
-            $modules = Module::all();
-            foreach ( $modules as $module) {
-                if($module->active){
-                    $path = base_path('modules/' . $module->name . '/');
-                    if (is_dir($path.'Routes')) {
-                        $this->webRoutes($module->name);
-                        $this->apiRoutes($module->name);
-                    }
-                    if (is_dir($path.'Resources/Views/')) {
-                        $this->loadViews($module->name);
-                    }
-                    if (is_dir($path.'Resources/Lang/')) {
-                        $this->loadTranslations($module->name);
-                    }
-                    if (is_dir($path.'Database/migrations/')) {
-                        $this->loadMigrations($module->name);
-                    }
-                    if (is_dir($path.'Database/Factories/')) {
-                        $this->name = $module->name;
-                        $this->app->singleton(EloquentFactory::class, function ($app){
-                            $faker = $app->make(FakerGenerator::class);
-                            $factories_path = base_path('modules/' . $this->name . '/Database/Factories');;
-                            return EloquentFactory::construct($faker, $factories_path);
-                         });
-                    }
-                    if (is_dir($path.'Resources/Assets/js/')) {
-                        $this->JsFileRoute(base_path('modules/' . $module->name . '/Resources/Assets/js/'),$module->name);
-                    }
-                    if (is_dir($path.'Resources/Assets/css/')) {
-                        $this->CssFileRoute(base_path('modules/' . $module->name . '/Resources/Assets/css/'),$module->name);
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -157,18 +95,6 @@ class ModulesServiceProvider extends ServiceProvider
             [__DIR__.'/Database/migrations/create_modules_table.php' => database_path('migrations/'.$timestamp.'_create_modules_table.php')
             ],'migrations');
     }
-
-    /**
-     * Load migrations for all.
-     *
-     * @param string $module
-     * @return void
-     */
-    protected function loadMigrations($module)
-    {
-        $this->loadMigrationsFrom(base_path('modules/'.$module.'/Database/migrations/'));
-    }
-
     /**
      * Publishes commands module.
      *
@@ -178,109 +104,26 @@ class ModulesServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                CreateModule::class,
-                CreateController::class,
-                CreateMiddleware::class,
-                CreateRequest::class,
-                CreateModel::class,
-                CreateFactory::class,
-                CreateSeeder::class,
-                CreateMigration::class,
-                CreateTest::class,
-                CreatePolicy::class,
-                ModuleList::class,
-                ModuleActive::class,
-                ModuleDelete::class,
-                ModuleUp::class,
-                PublishModule::class,
-                ModuleInstall::class,
-                ModuleMigrate::class,
-                ModuleRollback::class,
-                ModuleSeed::class
+                CreateModuleCommand::class,
+                CreateModelCommand::class,
+                CreateControllerCommand::class,
+                CreateMigrationCommand::class,
+                CreateFactoryCommand::class,
+                CreateSeederCommand::class,
+                CreateMiddlewareCommand::class,
+                CreatePolicyCommand::class,
+                CreateRequestCommand::class,
+                CreateTestCommand::class,
+                ModuleActiveCommand::class,
+                ModuleListCommand::class,
+                ModuleMigrateCommand::class,
+                ModuleRollbackCommand::class,
+                ModuleSeedCommand::class,
+                ModuleDeleteCommand::class,
+                PublishModuleCommand::class,
             ]);
         }
     }
 
-    /**
-     * web routes for all modules.
-     *
-     * @param string $module
-     * @return void
-     */
-    protected function webRoutes($module)
-    {
-        Route::middleware('web')->namespace('Modules\\'.$module.'\Http\Controllers')
-                                ->group(base_path('modules/'.$module.'/Routes/web.php'));
-    }
-
-    /**
-     * Register the Api Routes for application modules.
-     *
-     * @return void
-     */
-    protected function apiRoutes($module)
-    {
-        Route::prefix('api')->middleware('api')->namespace('Modules\\'.$module.'\Http\Controllers')->group(base_path('modules/'.$module.'/Routes/api.php'));
-    }
-
-    /**
-     * Register the Api Routes for application modules.
-     *
-     * @return void
-     */
-    protected function loadViews($module)
-    {
-        $this->loadViewsFrom(base_path('modules/'.$module.'/Resources/Views'),$module);
-    }
-
-    /**
-     * Register the Translations for application modules.
-     *
-     * @return void
-     */
-    protected function loadTranslations($module)
-    {
-        $this->loadTranslationsFrom(base_path('modules/'.$module.'/Resources/Lang'),$module);
-    }
-
-    /**
-     * Load js files for all modules.
-     *
-     * @param string $rute
-     * @param string $module
-     * @return void
-     */
-    protected function JsFileRoute($rute,$module)
-    {
-          $this->routeJS = $rute;
-          \Route::get('modules/'.$module.'/{filename}', function ($filename){
-              $path =  $this->routeJS . $filename;
-              $file = \File::get($path);
-              $type = \File::mimeType($path);
-              $response = \Response::make($file, 200);
-              $response->header("Content-Type", $type);
-              return $response;
-          });
-    }
-
-    /**
-     * Load css files for all modules.
-     *
-     * @param string $rute
-     * @param string $module
-     * @return void
-     */
-    protected function CssFileRoute($rute,$module)
-    {
-        $this->routeCSS = $rute;
-        \Route::get('modules/'.$module.'/{filename}', function ($filename){
-            $path =  $this->routeCSS . $filename;
-            $file = \File::get($path);
-            $type = \File::mimeType($path);
-            $response = \Response::make($file, 200);
-            $response->header("Content-Type", $type);
-            return $response;
-        });
-    }
-
+   
 }

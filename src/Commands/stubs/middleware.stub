@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DummyModule\Http\Middleware;
+namespace DummyNamespace;
 
 use Closure;
 

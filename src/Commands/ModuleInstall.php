@@ -3,8 +3,8 @@ namespace JMinayaT\Modules\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use JMinayaT\Modules\Commands\ManagerCommands;
 use Chumper\Zipper\Zipper;
+use JMinayaT\Modules\Util\ModuleData;
 
 class ModuleInstall extends Command
 {
@@ -22,11 +22,16 @@ class ModuleInstall extends Command
      */
     protected $description = 'Install module from zip file';
 
-    public function __construct(Filesystem $files, ManagerCommands $mnc)
+    protected $files;
+    protected $moduledt;
+    protected $zipper;
+
+    public function __construct(Filesystem $files, ModuleData $moduledt, Zipper $zipper)
     {
         parent::__construct();
         $this->files = $files;
-        $this->mnc = new $mnc;
+        $this->moduledt = $moduledt;
+        $this->zipper = $zipper;
     }
 
     /**
@@ -36,13 +41,13 @@ class ModuleInstall extends Command
      */
     public function handle()
     {
-        $zipper = new Zipper;
         $path = $this->argument('path');
         $zipper->make($path)->extractTo(storage_path(), array('module.json'), Zipper::WHITELIST);
         $file = $this->files->get(storage_path('module.json'));
         $json = json_decode($file, true);
-
-        if ( $this->mnc->hasModule($json['name']) ) {
+        echo $this->moduledt->version($json['name']);
+        return false;
+        if ( $this->moduledt->exists($json['name']) ) {
             $this->error('Module exist!');
             return false;
         }
