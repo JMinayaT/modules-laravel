@@ -19,6 +19,7 @@ use JMinayaT\Modules\Commands\ModuleRollbackCommand;
 use JMinayaT\Modules\Commands\ModuleSeedCommand;
 use JMinayaT\Modules\Commands\ModuleDeleteCommand;
 use JMinayaT\Modules\Commands\PublishModuleCommand;
+use JMinayaT\Modules\Commands\ModuleInstallCommand;
 
 class ModulesServiceProvider extends ServiceProvider
 {
@@ -121,6 +122,7 @@ class ModulesServiceProvider extends ServiceProvider
                 ModuleSeedCommand::class,
                 ModuleDeleteCommand::class,
                 PublishModuleCommand::class,
+                ModuleInstallCommand::class,
             ]);
         }
     }

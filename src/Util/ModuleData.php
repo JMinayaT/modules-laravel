@@ -4,6 +4,7 @@ namespace JMinayaT\Modules\Util;
 
 use Illuminate\Support\Facades\Cache;
 use JMinayaT\Modules\Models\Module;
+use Illuminate\Filesystem\Filesystem;
 
 class ModuleData
 {
@@ -89,12 +90,33 @@ class ModuleData
     }
     protected function getJson($name)
     {
-        $json = $this->files->get($this->getPath($name).'module.json');
+        $files = new Filesystem;
+        $json = $files->get($this->getPath($name).'module.json');
         return json_decode($json, true);
     }
 
     public function version($name)
     {
         return $this->getJson($name)['version'];
+    }
+
+    public function registerModuleDB($name_module, $description, $alias)
+    {
+        $this->cacheForget();
+        $module = new Module;
+        $module->name = $name_module;
+        $module->alias =$alias;
+        $module->description = $description;
+        $module->save();
+    }
+
+    public function updateModuleDB($name_module, $description, $alias)
+    {
+        $this->cacheForget();
+        $module = Module::where('name', $name_module)->first();
+        $module->name = $name_module;
+        $module->alias =$alias;
+        $module->description = $description;
+        $module->save();
     }
 }

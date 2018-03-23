@@ -62,7 +62,7 @@ class CreateModuleCommand extends GeneratorCommand
 
         $this->files->put($path.'Database/Seeds/DatabaseSeeder.php', $this->dataBaseSeederbuildClass($name));  
         $this->files->put($path.'module.json', $this->buildJson($name, $this->getSnake(), $dcp));
-        $this->registerModuleDB($name, $dcp, $this->getSnake());
+        $this->moduledt->registerModuleDB($name, $dcp, $this->getSnake());
         $this->info('Module created successfully.');
 
     }
@@ -112,16 +112,6 @@ class CreateModuleCommand extends GeneratorCommand
         return [
             ['module',   InputArgument::REQUIRED, 'The name of the module'],
         ];
-    }
-
-    protected function registerModuleDB($name_module, $description, $alias)
-    {
-        $this->moduledt->cacheForget();
-        $module = new Module;
-        $module->name = $name_module;
-        $module->alias =$alias;
-        $module->description = $description;
-        $module->save();
     }
 
     protected function buildJson($name, $alias, $description)
