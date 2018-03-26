@@ -1,5 +1,5 @@
 <?php
-
+/**TODO AL CREAR EL PROVIDER NO GENERA EL NAMESPACE */
 namespace JMinayaT\Modules\Commands;
 
 use Illuminate\Support\Str;
@@ -47,6 +47,7 @@ class CreateModuleCommand extends GeneratorCommand
         $path = $this->getBasePath();
         $this->makeDirectory($path);
         $this->makeDirectory($path.'Http/Controllers');
+        $this->makeDirectory($path.'Providers');
         $this->makeDirectory($path.'Resources/assets/js');
         $this->makeDirectory($path.'Resources/assets/css');
         $this->makeDirectory($path.'Resources/views');
@@ -60,7 +61,8 @@ class CreateModuleCommand extends GeneratorCommand
         $this->files->put($path.'Routes/web.php', $this->files->get(__DIR__.'/stubs/route.web.stub'));
         $this->files->put($path.'Routes/api.php', $this->files->get(__DIR__.'/stubs/route.api.stub'));
 
-        $this->files->put($path.'Database/Seeds/DatabaseSeeder.php', $this->dataBaseSeederbuildClass($name));  
+        $this->files->put($path.'Database/Seeds/DatabaseSeeder.php', $this->dataBaseSeederbuildClass($name)); 
+        $this->files->put($path.'Providers/'.$name.'ServiceProvider.php', $this->buildProvider($name)); 
         $this->files->put($path.'module.json', $this->buildJson($name, $this->getSnake(), $dcp));
         $this->moduledt->registerModuleDB($name, $dcp, $this->getSnake());
         $this->info('Module created successfully.');
@@ -78,6 +80,7 @@ class CreateModuleCommand extends GeneratorCommand
 
         return $this->replaceNamespace($stub, $name)->replaceClass($stub, $name);
     }
+    
 
     /**
      * Build the directory for the class if necessary.
@@ -123,5 +126,10 @@ class CreateModuleCommand extends GeneratorCommand
                 $getStub
         );
         return $stub;
+    }
+
+    protected function buildProvider($name) {
+        $stub = $this->files->get(__DIR__.'/stubs/main-provider.stub');
+        return $this->replaceNamespace($stub, $name)->replaceClass($stub, $name);
     }
 }

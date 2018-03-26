@@ -12,6 +12,7 @@ use JMinayaT\Modules\Commands\CreateMiddlewareCommand;
 use JMinayaT\Modules\Commands\CreatePolicyCommand;
 use JMinayaT\Modules\Commands\CreateRequestCommand;
 use JMinayaT\Modules\Commands\CreateTestCommand;
+use JMinayaT\Modules\Commands\CreateProviderCommand;
 use JMinayaT\Modules\Commands\ModuleActiveCommand;
 use JMinayaT\Modules\Commands\ModuleListCommand;
 use JMinayaT\Modules\Commands\ModuleMigrateCommand;
@@ -82,6 +83,10 @@ class ModulesServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/Config/modules.php' => config_path('modules.php'),
             ], 'config');
+
+         $this->mergeConfigFrom(
+        __DIR__.'/Config/modules.php', 'modules'
+    );
     }
 
     /**
@@ -115,6 +120,7 @@ class ModulesServiceProvider extends ServiceProvider
                 CreatePolicyCommand::class,
                 CreateRequestCommand::class,
                 CreateTestCommand::class,
+                CreateProviderCommand::class,
                 ModuleActiveCommand::class,
                 ModuleListCommand::class,
                 ModuleMigrateCommand::class,
