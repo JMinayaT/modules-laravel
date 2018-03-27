@@ -130,6 +130,24 @@ class CreateModuleCommand extends GeneratorCommand
 
     protected function buildProvider($name) {
         $stub = $this->files->get(__DIR__.'/stubs/main-provider.stub');
-        return $this->replaceNamespace($stub, $name)->replaceClass($stub, $name);
+        return $this->replaceNamespaceMainProvider($stub, $name)->replaceClass($stub, $name.'ServiceProvider');
+    }
+
+    /**
+     * Replace the namespace for the given stub.
+     *
+     * @param  string  $stub
+     * @param  string  $name
+     * @return $this
+     */
+    protected function replaceNamespaceMainProvider(&$stub, $name)
+    {
+        $stub = str_replace(
+            ['DummyNamespace', 'DummyModule'],
+            [$this->rootNamespace().'Providers' ,str_replace($this->getNamespace($name).'\\', '', $name)],
+            $stub
+        );
+
+        return $this;
     }
 }
