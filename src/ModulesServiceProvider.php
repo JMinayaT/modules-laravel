@@ -43,6 +43,7 @@ class ModulesServiceProvider extends ServiceProvider
         $this->publishesConfig();
         $this->publishesMigrations();
         $this->publishesCommands();
+        $this->app->register(BootModuleServiceProvider::class);
     }
 
     /**
@@ -58,7 +59,7 @@ class ModulesServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/Config/modules.php',
             'modules'
-        );
+        );        
     }
 
     /**

@@ -119,4 +119,14 @@ class ModuleData
         $module->description = $description;
         $module->save();
     }
+
+    public function getModulesNameSpace()
+    {
+        $namespace = [];
+        foreach($this->getModuleNameArray($this->getArray()) as $key => $value ){
+            $namespace[$value] = 'Modules\\'.$value;
+        }
+        return $namespace;
+    }
+
 }

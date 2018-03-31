@@ -45,7 +45,7 @@ class DummyClass extends ServiceProvider
     public function registerFactories()
     {
         if (! $this->app->environment('production')) {
-            $this->app(Factory::class)->load(__DIR__ . '/../Database/Factories');
+            $this->app->make(Factory::class)->load(__DIR__ . '/../Database/Factories');
         }
     }
 }
