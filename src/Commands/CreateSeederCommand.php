@@ -94,4 +94,15 @@ class CreateSeederCommand extends GeneratorCommand
     {
         return $name;
     }
+
+     /**
+     * Get the full namespace for a given class, without the class name.
+     *
+     * @param  string  $name
+     * @return string
+     */
+    protected function getNamespace($name)
+    {
+        return 'Modules\\'.$this->getStudly().'\\Database\Seeds';
+    }
 }
