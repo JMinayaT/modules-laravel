@@ -3,8 +3,9 @@
 namespace JMinayaT\Modules\Util;
 
 use Illuminate\Support\Facades\Cache;
-use JMinayaT\Modules\Models\Module;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Schema;
+use JMinayaT\Modules\Models\Module;
 
 class ModuleData
 {
@@ -44,9 +45,17 @@ class ModuleData
         return $this->getModulesArray();
     }
 
+    public function hasTable() {
+        if( ! Schema::hasTable(config('modules.table_name'))){
+            return false;
+        }
+        return true;
+    }
     protected function getModulesArray()
     {
+       
         return Module::all()->toArray();
+       
     }
 
     public function getArray()

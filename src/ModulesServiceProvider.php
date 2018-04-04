@@ -2,6 +2,7 @@
 namespace JMinayaT\Modules;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\DB;
 use JMinayaT\Modules\Commands\CreateModuleCommand;
 use JMinayaT\Modules\Commands\CreateModelCommand;
 use JMinayaT\Modules\Commands\CreateControllerCommand;
@@ -43,6 +44,11 @@ class ModulesServiceProvider extends ServiceProvider
         $this->publishesConfig();
         $this->publishesMigrations();
         $this->publishesCommands();
+        try {
+            DB::connection()->getPdo();
+        } catch (\Exception $e) {
+            die("Could not connect to the database.  Please check your configuration.");
+        }
         $this->app->register(BootModuleServiceProvider::class);
     }
 
