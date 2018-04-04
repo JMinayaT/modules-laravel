@@ -265,6 +265,15 @@ abstract class GeneratorCommand extends Command
     {
         return Str::studly($this->getModuleNameInput());
     }
+     /**
+     * Get the desired class name from the input.
+     *
+     * @return string
+     */
+    protected function getTitleCase()
+    {
+        return title_case($this->getModuleNameInput());
+    }
     /**
      * Get the desired class name from the input.
      *

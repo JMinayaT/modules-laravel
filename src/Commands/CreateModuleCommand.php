@@ -39,6 +39,7 @@ class CreateModuleCommand extends GeneratorCommand
     public function handle()
     {
         $name = $this->getStudly();
+        $name_case = $this->getTitleCase();
         if($this->moduleExists($name)) {
             $this->error('Module already exists!');
             return false;
@@ -63,8 +64,8 @@ class CreateModuleCommand extends GeneratorCommand
 
         $this->files->put($path.'Database/Seeds/DatabaseSeeder.php', $this->dataBaseSeederbuildClass($name)); 
         $this->files->put($path.'Providers/'.$name.'ServiceProvider.php', $this->buildProvider($name)); 
-        $this->files->put($path.'module.json', $this->buildJson($name, $this->getSnake(), $dcp));
-        $this->moduledt->registerModuleDB($name, $dcp, $this->getSnake());
+        $this->files->put($path.'module.json', $this->buildJson($name_case, $this->getStudly(), $dcp));
+        $this->moduledt->registerModuleDB($name_case, $dcp, $this->getStudly());
         $this->info('Module created successfully.');
 
     }
