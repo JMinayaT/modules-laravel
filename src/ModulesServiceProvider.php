@@ -54,7 +54,7 @@ class ModulesServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('modules', function($app) {
-            return new ModuleService();
+            return new RepositoryService([]);
         });
         $this->mergeConfigFrom(
             __DIR__.'/Config/modules.php',

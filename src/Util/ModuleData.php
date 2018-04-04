@@ -77,6 +77,29 @@ class ModuleData
         }
         return $names;
     }
+    public function getModulesActive()
+    {
+        $actives = [];
+        foreach($this->getArray() as $key => $value ){
+            if($value['active']) {
+                $actives[] = $value;
+            }
+            
+        }
+        return $actives;
+    }
+
+    public function getModulesDisable()
+    {
+        $disables = [];
+        foreach($this->getArray() as $key => $value ){
+            if(! $value['active']) {
+                $disables[] = $value;
+            }
+            
+        }
+        return $disables;
+    }
     public function active($name, $value)
     {
         $module = Module::where('name', $name)->first();
@@ -125,6 +148,16 @@ class ModuleData
         $namespace = [];
         foreach($this->getModuleNameArray($this->getArray()) as $key => $value ){
             $namespace[$value] = 'Modules\\'.$value;
+        }
+        return $namespace;
+    }
+    public function getModulesBootNameSpace()
+    {
+        $namespace = [];
+        foreach($this->getArray() as $key => $value ){
+            if($value['active']) {
+                $namespace[$value['name']] = 'Modules\\'.$value['name'];
+            }
         }
         return $namespace;
     }

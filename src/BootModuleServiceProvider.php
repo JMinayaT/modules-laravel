@@ -27,7 +27,7 @@ class BootModuleServiceProvider extends ServiceProvider
     public function register()
     {
         $md = new ModuleData;
-        foreach ($md->getModulesNameSpace() as $key => $value) {
+        foreach ($md->getModulesBootNameSpace() as $key => $value) {
             $class = $value.'\Providers\\'.$key.'ServiceProvider';
             if(class_exists($class)){
                 
