@@ -22,6 +22,7 @@ use JMinayaT\Modules\Commands\ModuleSeedCommand;
 use JMinayaT\Modules\Commands\ModuleDeleteCommand;
 use JMinayaT\Modules\Commands\PublishModuleCommand;
 use JMinayaT\Modules\Commands\ModuleInstallCommand;
+use JMinayaT\Modules\Commands\CreateResourceCommand;
 
 class ModulesServiceProvider extends ServiceProvider
 {
@@ -128,6 +129,7 @@ class ModulesServiceProvider extends ServiceProvider
                 CreateRequestCommand::class,
                 CreateTestCommand::class,
                 CreateProviderCommand::class,
+                CreateResourceCommand::class,
                 ModuleActiveCommand::class,
                 ModuleListCommand::class,
                 ModuleMigrateCommand::class,
