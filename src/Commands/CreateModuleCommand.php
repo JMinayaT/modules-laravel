@@ -55,6 +55,7 @@ class CreateModuleCommand extends GeneratorCommand
         $this->makeDirectory($path.'Resources/lang');
         $this->makeDirectory($path.'Models');
         $this->makeDirectory($path.'Routes');
+        $this->makeDirectory($path.'Config');
         $this->makeDirectory($path.'Database/Migrations');
         $this->makeDirectory($path.'Database/Factories');
         $this->makeDirectory($path.'Database/Seeds');
@@ -64,6 +65,7 @@ class CreateModuleCommand extends GeneratorCommand
 
         $this->files->put($path.'Database/Seeds/DatabaseSeeder.php', $this->dataBaseSeederbuildClass($name)); 
         $this->files->put($path.'Providers/'.$name.'ServiceProvider.php', $this->buildProvider($name)); 
+        $this->files->put($path.'Config/'.strtolower($name).'.php', $this->buildConfig($name)); 
         $this->files->put($path.'module.json', $this->buildJson($name_case, $this->getStudly(), $dcp));
         $this->moduledt->registerModuleDB($name_case, $dcp, $this->getStudly());
         $this->info('Module created successfully.');
@@ -134,6 +136,11 @@ class CreateModuleCommand extends GeneratorCommand
         return $this->replaceNamespaceMainProvider($stub, $name)->replaceClass($stub, $name.'ServiceProvider');
     }
 
+    protected function buildConfig($name) {
+        $stub = $this->files->get(__DIR__.'/stubs/config.stub');
+        return $this->replaceNameConfig($stub, $name)->replaceClass($stub, $name);;
+    }
+
     /**
      * Replace the namespace for the given stub.
      *
@@ -144,8 +151,19 @@ class CreateModuleCommand extends GeneratorCommand
     protected function replaceNamespaceMainProvider(&$stub, $name)
     {
         $stub = str_replace(
-            ['DummyNamespace', 'DummyModule'],
-            [$this->rootNamespace().'Providers' ,str_replace($this->getNamespace($name).'\\', '', $name)],
+            ['DummyNamespace', 'DummyModule','DummyLowerModule'],
+            [$this->rootNamespace().'Providers' ,str_replace($this->getNamespace($name).'\\', '', $name),strtolower(str_replace($this->getNamespace($name).'\\', '', $name))],
+            $stub
+        );
+
+        return $this;
+    }
+
+    protected function replaceNameConfig(&$stub, $name)
+    {
+        $stub = str_replace(
+            ['DummyModule'],
+            [str_replace($this->getNamespace($name).'\\', '', $name)],
             $stub
         );
 

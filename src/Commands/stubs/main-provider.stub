@@ -17,6 +17,7 @@ class DummyClass extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__  . '/../Resources/views', 'DummyModule');
         $this->loadTranslationsFrom(__DIR__  . '/../Resources/lang', 'DummyModule');
+        $this->registerConfig();
         $this->registerWebRoutes();
         $this->registerApiRoutes();
         $this->loadMigrationsFrom(__DIR__  . '/../Database/Migrations');
@@ -47,5 +48,15 @@ class DummyClass extends ServiceProvider
         if (! $this->app->environment('production')) {
             $this->app->make(Factory::class)->load(__DIR__ . '/../Database/Factories');
         }
+    }
+
+     protected function registerConfig()
+    {
+        $this->publishes([
+            __DIR__.'/../Config/DummyLowerModule.php' => config_path('DummyLowerModule.php'),
+        ], 'config');
+        $this->mergeConfigFrom(
+            __DIR__.'/../Config/DummyLowerModule.php', 'DummyLowerModule'
+        );
     }
 }
