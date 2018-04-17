@@ -15,6 +15,14 @@ class RepositoryService implements RepositoryInterface
     public function all(){
         return $this->moduledt->getArray();
     }
+    public function allName($array)
+    {
+        $names = [];
+        foreach($this->moduledt->getArray() as $key => $value ){
+            $names[] = $value['name'];
+        }
+        return $names;
+    }
 
     /**
      * Get list of enabled modules.
