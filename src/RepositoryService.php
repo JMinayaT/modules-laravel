@@ -15,7 +15,7 @@ class RepositoryService implements RepositoryInterface
     public function all(){
         return $this->moduledt->getArray();
     }
-    public function allName($array)
+    public function allName()
     {
         $names = [];
         foreach($this->moduledt->getArray() as $key => $value ){
